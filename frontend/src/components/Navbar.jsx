@@ -36,10 +36,10 @@ const Navbar = () => {
           <Settings className="w-4 h-4"/>
           <span className='hidden sm:inline'>Profile</span>
         </Link>
-        <button className='flex gap-2 items-center cursor-pointer' onClick={logout}>
+        {authUser && <button className='flex gap-2 items-center cursor-pointer' onClick={logout}>
           <LogOut className='size-5'/>
           <span className="hidden sm:inline">Logout</span>
-        </button>
+        </button>}
       </div>
     </div>
   </div>

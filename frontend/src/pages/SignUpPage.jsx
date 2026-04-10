@@ -21,7 +21,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault()
     const success= validateForm()
-    if (success) await signup(formData)
+    if (success==true) signup(formData)
   };
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
@@ -92,7 +92,7 @@ const SignUpPage = () => {
               />
               <button
                 type='button'
-                className='absolute inset-y-0 right-0 pr-3 flex items-center'
+                className='absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer hover:opacity-70'
                 onClick={()=> setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -103,7 +103,7 @@ const SignUpPage = () => {
               </button>
             </div>
           </div>
-          <button type='submit' className='btn btn-primary w-full' disabled={isSigningUp}>
+          <button type='submit' className='btn btn-primary w-full cursor-pointer' disabled={isSigningUp}>
             {isSigningUp? (
               <>
               <Loader2 className='size-5 animate-spin' />
