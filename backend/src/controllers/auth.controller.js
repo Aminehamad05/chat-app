@@ -5,7 +5,7 @@ import cloudinary from "../lib/cloudinary.js"
 export const signup = async (req,res)=>{
     const {fullName,email,password} = req.body
     if(!fullName || !email || !password){
-        res.status(400).json({message:"All field are required"})
+        return res.status(400).json({message:"All field are required"})
     }
     try {
         if(password.length<6){
@@ -14,7 +14,7 @@ export const signup = async (req,res)=>{
             })
         }
         const user = await User.findOne({email})
-        if (user) return req.status(400).json({message : "Email already exists"})
+        if (user) return res.status(400).json({message : "Email already exists"})
         const salt = await bcrypt.genSalt(10)
         const hashedPassword =await bcrypt.hash(password,salt)
         const newUser= new User({
