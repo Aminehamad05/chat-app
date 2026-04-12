@@ -62,6 +62,7 @@ export const useAuthStore = create((set) => ({
             set({authUser:resp.data})
             toast.success("Profile picture updated successfully")
         } catch (error) {
+            console.log(error)
             toast.error(error.response?.data?.message || error.message)
         }finally {
             set({isUpdatingProfile:false})

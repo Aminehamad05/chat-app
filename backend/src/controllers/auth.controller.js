@@ -44,11 +44,11 @@ export const login = async(req,res)=>{
     try {
         const {email,password}=req.body
         if (!email || !password){
-             res.status(400).send({"message":"All field are required"})
+            return res.status(400).send({"message":"All field are required"})
         }
         const user = await User.findOne({email})
         if(!user){
-            res.status(404).send({"message":"Invalid Credential"})
+            return res.status(404).send({"message":"Invalid Credential"})
         }
         const isPasswordCorrect=await bcrypt.compare(password,user.password)
         if(!isPasswordCorrect){
@@ -77,13 +77,16 @@ export const logout = (req,res)=>{
 }
 export const updateProfile = async(req,res) =>{
     try {
+        if (!req.body) {
+            return res.status(400).json({message:"Request body is empty"});
+        }
         const {profilePic}= req.body;
         const userId= req.user._id
         if(!profilePic){
             return res.status(400).json({message:"Profile pic is required "});
         }
         const uploadResponse= await cloudinary.uploader.upload(profilePic)
-        const UpdatedUser= await User.findByIdAndUpdate(userId,{profilePic:uploadResponse.secure_url},{new:true})
+        const UpdatedUser= await User.findByIdAndUpdate(userId,{profilePic:uploadResponse.secure_url},{returnDocument:'after'})
         res.status(200).json(UpdatedUser)
     } catch (error) {
         console.log("error in update profile", error)
